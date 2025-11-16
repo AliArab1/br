@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Revoka | Type a fix → get a safe script</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #060916;
+      --card: rgba(13,17,38,0.86);
+      --card-border: rgba(108,126,255,0.28);
+      --accent: #6b7bff;
+      --accent-soft: rgba(107,123,255,0.12);
+      --green: #3bd48f;
+      --text-primary: #f4f6ff;
+      --text-secondary: rgba(244,246,255,0.72);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin:0; font-family:"Inter","Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text-primary); }
+    body { overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+
+    header { width:clamp(320px, 92vw, 1080px); margin:0 auto; padding:36px 0 80px; position:relative; }
+    nav { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 28px; margin-bottom:40px; background:rgba(9,12,28,0.65); border:1px solid rgba(255,255,255,0.08); border-radius:18px; backdrop-filter:blur(16px); position:sticky; top:18px; z-index:10; }
+    nav .logo { display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:14px; }
+    nav .logo-dot { width:12px; height:12px; border-radius:50%; background:conic-gradient(from 90deg at 50% 50%, var(--accent), #ff6bb2, #3bd48f); box-shadow:0 0 18px rgba(107,123,255,0.6); }
+    nav ul { list-style:none; display:flex; gap:20px; padding:0; margin:0; }
+    nav li { font-size:14px; font-weight:500; opacity:0.78; }
+    nav li:hover { opacity:1; }
+    nav .cta { background:var(--accent); color:#fff; padding:10px 20px; border-radius:999px; font-weight:600; font-size:14px; box-shadow:0 20px 40px rgba(107,123,255,0.25); }
+    nav .cta:hover { transform:translateY(-1px); }
+
+    .hero { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:42px; align-items:center; padding:0 28px; position:relative; }
+    .hero::before { content:""; position:absolute; inset:-80px auto auto -120px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle at 50% 40%, rgba(75,90,255,0.45), rgba(14,19,43,0)); filter:blur(14px); z-index:-2; }
+    .hero::after { content:""; position:absolute; inset:140px auto auto 60%; width:260px; height:260px; border-radius:32px; background:var(--accent-soft); z-index:-1; transform:rotate(14deg); filter:blur(12px); }
+    .hero-copy h1 { font-size:clamp(36px, 4.6vw, 54px); font-weight:800; line-height:1.05; margin:0 0 18px; letter-spacing:-0.02em; }
+    .hero-copy p { margin:0 0 26px; font-size:18px; line-height:1.65; color:var(--text-secondary); max-width:560px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .hero-actions a { padding:14px 24px; border-radius:14px; font-weight:600; font-size:15px; display:flex; align-items:center; gap:10px; border:1px solid transparent; transition:all 0.2s ease; }
+    .hero-actions a.primary { background:var(--accent); box-shadow:0 24px 48px rgba(107,123,255,0.35); color:#fff; }
+    .hero-actions a.secondary { background:rgba(16,22,48,0.55); border-color:rgba(255,255,255,0.12); color:var(--text-primary); }
+    .hero-actions a.secondary:hover { border-color:var(--accent); color:#fff; }
+    .proof-strip { margin-top:28px; font-size:14px; color:var(--text-secondary); display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .proof-strip span { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.1); }
+
+    .hero-visual { position:relative; padding:32px; border-radius:24px; background:linear-gradient(160deg, rgba(15,22,52,0.8), rgba(15,22,52,0.35)); border:1px solid var(--card-border); box-shadow:0 30px 80px rgba(6,9,22,0.65); overflow:hidden; }
+    .hero-visual::before { content:"Response panel"; position:absolute; top:26px; right:26px; background:rgba(6,255,164,0.08); border:1px solid rgba(59,212,143,0.4); color:var(--green); padding:8px 16px; border-radius:999px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; }
+    .orbit { position:absolute; inset:40px; border:1px dashed rgba(255,255,255,0.12); border-radius:36px; transform:rotate(-5deg); }
+    .snippet { position:relative; margin-top:26px; background:rgba(0,0,0,0.4); border-radius:16px; border:1px solid rgba(255,255,255,0.08); padding:20px; font-size:13px; line-height:1.6; color:#e7ecff; }
+    .snippet strong { color:#fff; }
+
+    section { width:clamp(320px, 92vw, 1080px); margin:0 auto; padding:76px 0; position:relative; }
+    section h2 { font-size:32px; margin-bottom:16px; font-weight:700; }
+    section > p { max-width:640px; color:var(--text-secondary); margin-bottom:32px; }
+
+    .bullet-list { display:grid; gap:16px; }
+    .bullet-item { display:flex; gap:16px; align-items:flex-start; padding:18px 20px; border-radius:18px; background:var(--card); border:1px solid var(--card-border); }
+    .bullet-item span { font-weight:700; font-size:18px; min-width:40px; color:var(--accent); }
+    .bullet-item p { margin:0; color:var(--text-secondary); font-size:15px; line-height:1.6; }
+
+    .examples-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; }
+    .example-card { background:rgba(8,12,36,0.78); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:20px 22px; font-size:15px; line-height:1.6; color:var(--text-secondary); }
+    .example-card strong { display:block; font-size:16px; color:var(--text-primary); margin-bottom:6px; }
+
+    .steps { display:grid; gap:18px; border-left:2px solid rgba(255,255,255,0.1); padding-left:26px; margin-left:10px; }
+    .step { position:relative; padding-left:8px; }
+    .step::before { content:""; position:absolute; left:-35px; top:6px; width:14px; height:14px; border-radius:50%; background:var(--accent); box-shadow:0 0 18px rgba(107,123,255,0.6); }
+    .step h3 { margin:0 0 6px; font-size:18px; }
+    .step p { margin:0; color:var(--text-secondary); font-size:15px; line-height:1.6; }
+
+    .two-col { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px; }
+    .two-col .panel { background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:22px 24px; }
+    .two-col .panel h3 { margin:0 0 10px; font-size:18px; }
+    .two-col .panel p { margin:0; color:var(--text-secondary); line-height:1.6; }
+
+    .customers-grid { display:flex; flex-wrap:wrap; gap:18px; }
+    .customer-card { min-width:180px; flex:1 1 220px; padding:24px; border-radius:18px; background:rgba(8,12,36,0.75); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; position:relative; overflow:hidden; }
+    .customer-card::before { content:""; position:absolute; inset:-20px; background:radial-gradient(circle at top, rgba(107,123,255,0.18), rgba(0,0,0,0)); opacity:0; transition:opacity 0.2s ease; }
+    .customer-card:hover::before { opacity:1; }
+    .customer-badge { position:absolute; top:16px; left:16px; font-size:11px; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,0.12); color:var(--text-secondary); letter-spacing:0.12em; }
+
+    .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px; }
+    .pricing-card { background:rgba(8,14,36,0.78); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:24px 26px; }
+    .pricing-card h3 { margin:0 0 10px; font-size:22px; }
+    .pricing-card strong { font-size:18px; }
+    .pricing-card p { margin:10px 0 0; color:var(--text-secondary); line-height:1.6; }
+
+    .cta-section { text-align:center; padding:100px 28px; background:linear-gradient(160deg, rgba(19,27,60,0.9), rgba(19,33,90,0.9)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; box-shadow:0 40px 90px rgba(3,6,18,0.75); overflow:hidden; }
+    .cta-section h2 { font-size:34px; margin-bottom:14px; }
+    .cta-section p { color:var(--text-secondary); max-width:540px; margin:0 auto 26px; }
+    .cta-section .cta-buttons { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+    .cta-section .cta-buttons a { padding:15px 26px; border-radius:18px; font-weight:600; font-size:16px; border:1px solid transparent; }
+    .cta-section .cta-buttons a.primary { background:var(--accent); color:#fff; box-shadow:0 26px 54px rgba(107,123,255,0.35); }
+
+    footer { padding:46px 28px 70px; text-align:center; font-size:13px; color:var(--text-secondary); }
+    footer a { opacity:0.8; }
+    footer a:hover { opacity:1; }
+
+    @media (max-width:900px) {
+      nav { position:static; flex-direction:column; align-items:flex-start; gap:18px; }
+      nav ul { flex-wrap:wrap; }
+      .hero { grid-template-columns:1fr; padding:0 18px; }
+      .hero-visual { order:-1; margin-bottom:12px; }
+      header { padding-bottom:40px; }
+      .cta-section { margin:0 18px; }
+    }
+    @media (max-width:640px) {
+      nav { padding:18px 20px; }
+      .hero-actions a { flex:1 1 100%; justify-content:center; }
+      .proof-strip span { width:100%; justify-content:center; }
+      section { padding:60px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <div class="logo-dot"></div>
+        Revoka
+      </div>
+      <ul>
+        <li><a href="#what">What it does</a></li>
+        <li><a href="#examples">Examples</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#customers">Customers</a></li>
+      </ul>
+      <a class="cta" href="mailto:ali.arabb@outlook.com">Contact us</a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Create and ship safe fixes for company laptops</h1>
+        <p>Type the fix in plain English and Revoka returns a <strong>safe script</strong> you can <strong>preview</strong>, <strong>test on a few laptops</strong>, <strong>ship</strong>, and <strong>undo</strong>. If a <strong>fake login</strong> pops up, Revoka <strong>closes it</strong> and <strong>logs the user out of Google/Microsoft</strong> fast—everything is recorded.</p>
+        <div class="hero-actions">
+          <a class="primary" href="mailto:ali.arabb@outlook.com?subject=Revoka%20Pilot">Request 30-day pilot</a>
+          <a class="secondary" href="YOUR_DEMO_URL" target="_blank" rel="noopener">Watch 90-sec demo</a>
+          <a class="secondary" href="YOUR_EVIDENCE_URL" target="_blank" rel="noopener">Open Evidence Pack</a>
+        </div>
+        <div class="proof-strip">
+          <span>7 incidents</span>
+          <span>43s average revoke</span>
+          <span>0 critical false positives</span>
+          <span>46% tickets auto-closed</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit"></div>
+        <div class="snippet">
+          <strong>[RUNBOOK] Fake login containment</strong><br>
+          [CHECK] tab_detected: "contoso-login"<br>
+          [ACTION] close_tab: Success<br>
+          [ACTION] revoke_tokens: Google/M365 (Signed)<br>
+          [ACTION] lock_session: True<br>
+          [UNDO] window: 60s remaining<br><br>
+          [LOG] Recorded to audit trail
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="what">
+    <h2>What Revoka does</h2>
+    <div class="bullet-list">
+      <div class="bullet-item">
+        <span>01</span>
+        <p><strong>Turn words into safe fixes</strong> — You describe the fix; we generate a <strong>signed script</strong> you can check, try on a few machines, and roll out.</p>
+      </div>
+      <div class="bullet-item">
+        <span>02</span>
+        <p><strong>Stop phishing sessions fast</strong> — When users hit a fake login, we <strong>kill the page</strong> and <strong>log them out of Google/Microsoft</strong> quickly, with an <strong>Undo</strong> window.</p>
+      </div>
+      <div class="bullet-item">
+        <span>03</span>
+        <p><strong>Leave a clean audit trail</strong> — Every run is logged (who/what/when), so you can review or roll back anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="examples">
+    <h2>Simple examples</h2>
+    <div class="examples-grid">
+      <div class="example-card">
+        <strong>Printer stuck?</strong>
+        Clear the print queue, restart the spooler, re-test.
+      </div>
+      <div class="example-card">
+        <strong>Wi-Fi broken?</strong>
+        Reset the adapter and network settings, reconnect.
+      </div>
+      <div class="example-card">
+        <strong>Mic/webcam dead?</strong>
+        Reset permissions, rebind the device, quick test.
+      </div>
+      <div class="example-card">
+        <strong>VPN/DNS failing?</strong>
+        Flush DNS, repair split-tunnel, reachability check.
+      </div>
+      <div class="example-card">
+        <strong>Fake login page?</strong>
+        Close the tab, lock the session, <strong>revoke tokens</strong>.
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Describe</h3>
+        <p>“When X happens, do Y. Example: if fake login appears, close it and log the user out.”</p>
+      </div>
+      <div class="step">
+        <h3>2. Preview & test small</h3>
+        <p>See exactly what runs; try it on a few laptops first.</p>
+      </div>
+      <div class="step">
+        <h3>3. Ship & undo</h3>
+        <p>Roll out to everyone; <strong>undo</strong> if needed; everything is logged.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="audience">
+    <h2>Who it’s for</h2>
+    <div class="two-col">
+      <div class="panel">
+        <h3>Helpdesk / IT teams</h3>
+        <p>Want fewer tickets and faster fixes without hand-writing risky scripts.</p>
+      </div>
+      <div class="panel">
+        <h3>MSPs</h3>
+        <p>Need safe, repeatable automation across many clients with built-in guardrails.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <p>Teams use Revoka to <strong>close common laptop tickets quickly</strong> and to <strong>kill stolen sessions</strong> after phishing. It’s simple: <strong>describe → preview → test a few → ship → undo</strong>. Less time on repeat issues, less risk from “still-logged-in” accounts.</p>
+  </section>
+
+  <section id="pricing">
+    <h2>Pricing</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Core (safe fixes)</h3>
+        <strong>$6 / device / month</strong>
+        <p>All laptop remediation runbooks, preview, test, ship, and undo.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Security add-on</h3>
+        <strong>+ $2 / device / month</strong>
+        <p>Fake login containment, rapid token revocation, signed audit trail.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Minimum</h3>
+        <strong>$500 / month per org</strong>
+        <p>Education labs: <strong>$300 / lab / month</strong><br>Early pilots are grandfathered into their pilot price.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="customers">
+    <h2>Our customers</h2>
+    <p>Used by <strong>universities and enterprises</strong> to fix laptop issues and stop phishing sessions.</p>
+    <div class="customers-grid">
+      <div class="customer-card">
+        <span class="customer-badge">Security</span>
+        Nagarro
+      </div>
+      <div class="customer-card">
+        <span class="customer-badge">Experience</span>
+        XM
+      </div>
+      <div class="customer-card">
+        <span class="customer-badge">Hospitality</span>
+        Maids.CC
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta-section">
+      <h2>Have a fix you run every week?</h2>
+      <p>Send it and we’ll map it in Revoka so you can <strong>preview, test small, ship, and undo</strong>—with logs.</p>
+      <div class="cta-buttons">
+        <a class="primary" href="mailto:ali.arabb@outlook.com?subject=Revoka%20Pilot">Request 30-day pilot</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Revoka • Contact: <a href="mailto:ali.arabb@outlook.com">ali.arabb@outlook.com</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
