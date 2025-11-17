@@ -53,7 +53,7 @@
 
     .stats-section { text-align:center; padding:60px 28px; background:linear-gradient(160deg, rgba(19,27,60,0.9), rgba(19,33,90,0.9)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; margin:60px auto; max-width:900px; }
     .stats-section h2 { margin-bottom:40px; }
-    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; }
+    .stats-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; max-width:800px; margin:0 auto; }
     .stat-item { padding:20px; }
     .stat-number { font-size:42px; font-weight:800; color:var(--accent); margin-bottom:8px; line-height:1; }
     .stat-label { font-size:14px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; }
@@ -65,6 +65,7 @@
     .customer-logo { height:60px; width:auto; min-width:120px; opacity:0.7; transition:opacity 0.3s ease; display:flex; align-items:center; justify-content:center; }
     .customer-logo:hover { opacity:1; }
     .customer-logo img { height:100%; width:auto; max-width:180px; object-fit:contain; filter:brightness(0) invert(1); }
+    .customer-logo img[src$=".png"] { filter: brightness(0) invert(1) opacity(0.9); }
     .customer-logo .logo-text { font-size:24px; font-weight:600; color:var(--text-primary); }
 
     .cta-section { text-align:center; padding:100px 28px; background:linear-gradient(160deg, rgba(19,27,60,0.9), rgba(19,33,90,0.9)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; box-shadow:0 40px 90px rgba(3,6,18,0.75); max-width:700px; margin:0 auto; }
@@ -81,7 +82,7 @@
       nav { position:static; flex-direction:column; align-items:flex-start; gap:18px; }
       .hero { padding:0 18px; }
       section { padding:60px 0; }
-      .stats-grid { grid-template-columns:repeat(2, 1fr); }
+      .stats-grid { grid-template-columns:repeat(3, 1fr); gap:16px; }
     }
     @media (max-width:640px) {
       nav { padding:18px 20px; }
@@ -164,10 +165,6 @@
     <h2>Problems fixed so far</h2>
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-number">1,247</div>
-        <div class="stat-label">Incidents Resolved</div>
-      </div>
-      <div class="stat-item">
         <div class="stat-number">43s</div>
         <div class="stat-label">Average Response Time</div>
       </div>
@@ -176,7 +173,7 @@
         <div class="stat-label">Critical False Positives</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">46%</div>
+        <div class="stat-number">over 70%</div>
         <div class="stat-label">Tickets Auto-Closed</div>
       </div>
     </div>
@@ -187,11 +184,11 @@
     <p>Trusted by leading companies</p>
     <div class="customers-grid">
       <div class="customer-logo">
-        <img src="./logos/nagarro.svg" alt="Nagarro" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="./logos/nagarro.png" alt="Nagarro" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="logo-text" style="display:none;">Nagarro</span>
       </div>
       <div class="customer-logo">
-        <img src="./logos/xm.svg" alt="XM" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="./logos/xm.png" alt="XM" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="logo-text" style="display:none;">XM</span>
       </div>
       <div class="customer-logo">
