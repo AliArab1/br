@@ -64,8 +64,9 @@
     .customers-grid { display:flex; flex-wrap:wrap; gap:32px; justify-content:center; align-items:center; }
     .customer-logo { height:60px; width:auto; min-width:120px; opacity:0.7; transition:opacity 0.3s ease; display:flex; align-items:center; justify-content:center; }
     .customer-logo:hover { opacity:1; }
-    .customer-logo img { height:100%; width:auto; max-width:180px; object-fit:contain; filter:brightness(0) invert(1); }
-    .customer-logo img[src$=".png"] { filter: brightness(0) invert(1) opacity(0.9); }
+    .customer-logo img { height:100%; width:auto; max-width:180px; object-fit:contain; }
+    .customer-logo img[src$=".svg"] { filter: brightness(0) invert(1); }
+    .customer-logo img[src$=".png"] { filter: brightness(0) invert(1) opacity(0.85); background: transparent; }
     .customer-logo .logo-text { font-size:24px; font-weight:600; color:var(--text-primary); }
 
     .cta-section { text-align:center; padding:100px 28px; background:linear-gradient(160deg, rgba(19,27,60,0.9), rgba(19,33,90,0.9)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; box-shadow:0 40px 90px rgba(3,6,18,0.75); max-width:700px; margin:0 auto; }
